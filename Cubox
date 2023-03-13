@@ -1,0 +1,5 @@
+[rewrite_local]
+^https?:\/\/cubox\.pro\/c\/api\/(userInfo|userPay) url script-response-body CuboxUnlock.js
+
+[mitm] 
+hostname = cubox.pro
