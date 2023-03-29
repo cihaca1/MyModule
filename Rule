@@ -1,7 +1,6 @@
 #!name=Rule
 #!desc=分流规则
 [Rule]
-DOMAIN,spclient.wg.spotify.com,DIRECT
 DOMAIN-SET,https://anti-ad.net/surge2.txt,REJECT
 GEOIP,CN,DIRECT
 RULE-SET,LAN,DIRECT
