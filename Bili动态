@@ -1,5 +1,0 @@
-#!name=Bili动态
-#!desc=Bilibili动态
-[Script]
-动态去广告 = type=http-response,pattern=^https?:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.dynamic\.v2\.Dynamic\/DynAll$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/bilibili_proto.js,script-update-interval=0
-去热搜 = type=http-response,pattern=^https://app.bilibili.com/x/v2/search/square ,requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/bilibili_json.js,script-update-interval=0
