@@ -1,4 +1,0 @@
-#!name=BiliHD
-#!desc=解锁高码率
-[Script]
-BiliHD = type=http-response,pattern=^https?:\/\/app\.bilibili\.com\/x\/v2\/account\/myinfo\?,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/bilibili_json.js,script-update-interval=0
