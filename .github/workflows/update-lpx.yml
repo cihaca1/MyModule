@@ -1,0 +1,56 @@
+name: Update LPX files
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download LPX
+        run: |
+          mkdir -p Loon/Lpx
+
+          curl --http2 -L \
+            -A "Loon/975 CFNetwork/3860.600.12 Darwin/25.5.0" \
+            -H "Accept: */*" \
+            -H "Accept-Language: zh-CN,zh-Hans;q=0.9" \
+            --compressed \
+            -o Loon/Lpx/smzdm_remove_ads.lpx \
+            "https://kelee.one/Tool/Loon/Lpx/smzdm_remove_ads.lpx"
+
+          head -5 Loon/Lpx/smzdm_remove_ads.lpx
+
+          if grep -qi "Cloudflare\|Attention Required\|DOCTYPE html" Loon/Lpx/smzdm_remove_ads.lpx; then
+            echo "Downloaded Cloudflare block page, aborting."
+            exit 1
+          fi
+
+          if ! grep -q "^#!name=" Loon/Lpx/smzdm_remove_ads.lpx; then
+            echo "Downloaded file does not look like a valid Loon plugin."
+            exit 1
+          fi
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add Loon/Lpx/smzdm_remove_ads.lpx
+
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+
+          git commit -m "Update smzdm_remove_ads.lpx"
+          git push
